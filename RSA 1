@@ -1,0 +1,21 @@
+from Crypto.Util.number import inverse,long_to_bytes,bytes_to_long
+from binascii import unhexlify
+import base64
+from Crypto.PublicKey import RSA
+flag='e8oQDihsmkvjT3sZe+EE8lwNvBEsFegYF6+OOFOiR6gMtMZxxba/bIgLUD8pV3yEf0gOOfHuB5bC3vQmo7bE4PcIKfpFGZBA'
+pubkey="""-----BEGIN PUBLIC KEY-----
+MGQwDQYJKoZIhvcNAQEBBQADUwAwUAJJAMLLsk/b+SO2Emjj8Ro4lt5FdLO6WHMM
+vWUpOIZOIiPu63BKF8/QjRa0aJGmFHR1mTnG5Jqv5/JZVUjHTB1/uNJM0VyyO0zQ
+owIDAQAB
+-----END PUBLIC KEY-----"""
+key = RSA.importKey(pubkey)
+n = int(key.n)
+flag=base64.b64decode(flag)
+ct=bytes_to_long(flag)
+p=398075086424064937397125500550386491199064362342526708406385189575946388957261768583317
+q=472772146107435302536223071973048224632914695302097116459852171130520711256363590397527
+e=65537
+phi=(p-1)*(q-1)
+d=inverse(e,phi)
+pt=pow(ct,d,n)
+print(long_to_bytes(pt))
