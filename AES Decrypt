@@ -1,0 +1,11 @@
+from Crypto.Util.number import long_to_bytes
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Cipher import AES
+import base64
+key=b'YELLOW SUBMARINE'
+cipher = AES.new(key, AES.MODE_ECB)
+f=open('7.txt').read()
+t=base64.b64decode(f)
+plaintext=(cipher.decrypt(t))
+print(plaintext)
+
