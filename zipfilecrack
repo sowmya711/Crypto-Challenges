@@ -1,0 +1,22 @@
+//jerseyctf
+import zipfile
+def extractFile(zip_file, password):
+    try:
+        zip_file.extractall(pwd=password.encode())
+        return True
+    except KeyboardInterrupt:
+        exit(0)
+    except Exception as e:
+        pass
+zipfilename = 'secret_folder.zip'
+numbers_set = '12345'
+zip_file = zipfile.ZipFile(zipfilename)
+with open('actor_list.txt','r') as ac:
+        l= ac.readlines()
+
+for a in l:
+    for c in range(1000,9999):
+        password = a[:-1]+str(c)
+        if extractFile(zip_file, password):
+            print('Password found: %s' % password)
+            exit(0)
